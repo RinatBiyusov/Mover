@@ -2,17 +2,10 @@ using UnityEngine;
 
 public class EnemyRotator : MonoBehaviour
 {
-    private Transform _target;
-
-    public void Init(Transform target)
+    public void RotateAt(Transform target)
     {
-        _target = target;
-    }
+        Vector3 rotation = Quaternion.LookRotation(target.position - transform.position).eulerAngles;
 
-    private void Update()
-    {
-        Vector3 rotation = Quaternion.LookRotation(_target.position - transform.position).eulerAngles;
-        
-        transform.rotation = Quaternion.Euler(new  Vector3(0f, rotation.y, 0f));
+        transform.rotation = Quaternion.Euler(new Vector3(0f, rotation.y, 0f));
     }
 }

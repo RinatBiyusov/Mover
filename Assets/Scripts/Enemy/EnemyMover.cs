@@ -8,7 +8,6 @@ public class EnemyMover : MonoBehaviour, IMoveable
 {
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _stopDistance = 2f;
-    // [SerializeField] private float _fallForce = 3f;
     [SerializeField] private Transform _target;
 
     private GroundChecker _groundChecker;
@@ -24,19 +23,16 @@ public class EnemyMover : MonoBehaviour, IMoveable
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
-        _enemyRotator.Init(_target);
-    }
-
     public void Move()
     {
+        _enemyRotator.RotateAt(_target);
+        
         if (IsEnoughClose())
             return;
 
         Vector3 direction = (_target.position - transform.position).normalized;
         Vector3 speedMovement = direction * _speed;
-
+        
         if (_groundChecker.IsGrounded || _climbChecker.CanClimb)
         {
             if (_target.position.y < transform.position.y)
